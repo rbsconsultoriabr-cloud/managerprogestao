@@ -38,7 +38,7 @@ h1,h2,h3{line-height:1.15}h2{font-size:19px;margin-bottom:12px;border-left:4px s
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 input,select,textarea{width:100%;border:1px solid rgba(255,255,255,.15);background:rgba(3,8,19,.55);color:var(--txt);border-radius:15px;padding:13px 12px;outline:none;min-height:48px}textarea{min-height:94px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(244,199,107,.12)}
 input::placeholder,textarea::placeholder{color:#8090aa}select option{background:#071426;color:#fff}.btn{width:100%;border:0;border-radius:15px;padding:13px 14px;font-weight:1000;color:#071426;background:linear-gradient(135deg,var(--gold2),var(--gold));min-height:48px}.btn.sec{background:rgba(255,255,255,.08);color:var(--txt);border:1px solid var(--line)}.btn.green{background:linear-gradient(135deg,#20f194,#13a961);color:#02150b}.btn.red{background:linear-gradient(135deg,#ff7a88,#ff4b60);color:#fff}.btn.blue{background:linear-gradient(135deg,#6fb0ff,#2f7df1);color:#fff}.btn.small{padding:8px 10px;min-height:34px;font-size:12px;border-radius:11px}
-.tabs{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:rgba(7,20,38,.92);backdrop-filter:blur(12px);padding:10px 0}.tabs button{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);padding:12px 8px;border-radius:14px;font-weight:950}.tabs button.active{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071426;border-color:transparent}.hidden{display:none!important}.gestorOnly{display:none}.gestor .gestorOnly{display:block}.gestor .tabs{grid-template-columns:repeat(7,1fr)}
+.tabs{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:rgba(7,20,38,.92);backdrop-filter:blur(12px);padding:10px 0}.tabs button{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);padding:12px 8px;border-radius:14px;font-weight:950}.tabs button.active{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071426;border-color:transparent}.hidden{display:none!important}.gestorOnly{display:none}.gestor .gestorOnly{display:block}.gestor .tabs{grid-template-columns:repeat(8,1fr)}
 .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:14px;min-height:104px;display:flex;flex-direction:column;justify-content:center}.kpi span{color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.35px}.kpi b{font-size:30px;margin-top:5px}.kpi.gold b{color:var(--gold2)}.kpi.green b{color:var(--green)}.kpi.blue b{color:#78b6ff}.kpi.red b{color:#ff7280}.kpi.purple b{color:#b995ff}
 .progress{height:16px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:linear-gradient(135deg,var(--gold2),var(--green));border-radius:999px;transition:.25s}
 .tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:760px;background:rgba(3,8,19,.18)}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:13px}th{color:var(--gold2);font-size:12px;text-transform:uppercase;letter-spacing:.35px}tr:hover td{background:rgba(255,255,255,.035)}.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(217,164,65,.12);border:1px solid rgba(217,164,65,.38);color:var(--gold2);font-size:12px;font-weight:900}.pill.green{background:rgba(24,214,124,.10);border-color:rgba(24,214,124,.35);color:var(--green)}.pill.red{background:rgba(255,90,107,.10);border-color:rgba(255,90,107,.35);color:#ff8d98}.pill.blue{background:rgba(63,140,255,.10);border-color:rgba(63,140,255,.35);color:#8dc2ff}
@@ -46,6 +46,7 @@ input::placeholder,textarea::placeholder{color:#8090aa}select option{background:
 .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar .btn{width:auto}.photoCard{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045);padding:12px}.regResumo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.regResumo div{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:14px;padding:10px}.regResumo small{display:block;color:var(--muted);font-weight:900;text-transform:uppercase;font-size:10px}.regResumo b{font-size:17px}
 .empty{padding:18px;text-align:center;color:var(--muted)}
 .shareBox{border:1px solid rgba(244,199,107,.35);background:rgba(217,164,65,.08);border-radius:18px;padding:14px;white-space:pre-wrap;color:#f7edd7}.dangerZone{border-color:rgba(255,90,107,.32);background:rgba(255,90,107,.07)}
+.mapFrame{width:100%;height:360px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.05)}.mapList{display:grid;gap:10px}.mapItem{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--line);border-radius:16px;padding:12px;background:rgba(255,255,255,.045)}.mapItem b{display:block}.mapItem small{color:var(--muted)}
 @media(max-width:850px){.wrap{padding:10px 10px 80px}.hero{align-items:flex-start}.version{font-size:11px}.loginGrid,.grid,.grid3,.grid4{grid-template-columns:1fr}.tabs,.gestor .tabs{grid-template-columns:repeat(3,1fr);overflow:auto}.tabs button{font-size:12px;padding:11px 6px}.kpis{grid-template-columns:repeat(2,1fr)}.kpi{min-height:92px}.kpi b{font-size:26px}.logoText b{font-size:23px}.logoMark{width:48px;height:48px;border-radius:16px}.regResumo{grid-template-columns:1fr}.toolbar .btn{width:100%}table{min-width:680px}}
 @media(max-width:420px){.kpis{grid-template-columns:1fr}.tabs,.gestor .tabs{grid-template-columns:1fr 1fr}.hero{display:block}.version{display:inline-block;margin-top:10px}}
 </style>
@@ -96,6 +97,7 @@ input::placeholder,textarea::placeholder{color:#8090aa}select option{background:
       <button onclick="aba('relatorios',this)">Relatórios</button>
       <button onclick="aba('ranking',this)">Ranking</button>
       <button onclick="aba('equipe',this)">Equipe</button>
+      <button class="gestorOnly" onclick="aba('mapa',this)">Mapa</button>
       <button onclick="aba('demoVenda',this)">Vender</button>
       <button class="gestorOnly" onclick="aba('config',this)">Gestor</button>
     </nav>
@@ -156,6 +158,18 @@ input::placeholder,textarea::placeholder{color:#8090aa}select option{background:
         <input id="regValor" inputmode="numeric" placeholder="Valor. Ex: 1500 vira R$ 1.500,00">
       </div>
       <textarea id="regObs" style="margin-top:10px" placeholder="Observações do atendimento"></textarea>
+      <div class="card flat" style="margin-top:10px">
+        <h2>Localização</h2>
+        <p class="hint">Use para o gestor saber onde o atendimento foi registrado. O navegador vai pedir permissão de localização.</p>
+        <input id="regLatitude" type="hidden">
+        <input id="regLongitude" type="hidden">
+        <input id="regMapaUrl" type="hidden">
+        <div class="grid" style="margin-top:10px">
+          <button type="button" class="btn blue" onclick="capturarLocalizacao()">📍 Pegar localização atual</button>
+          <button type="button" class="btn sec" onclick="limparLocalizacao()">Remover localização</button>
+        </div>
+        <p id="locStatus" class="hint" style="margin-top:10px">Nenhuma localização capturada.</p>
+      </div>
       <div class="grid" style="margin-top:10px">
         <button class="btn" onclick="salvarRegistro()">Salvar registro</button>
         <button class="btn sec" onclick="limparRegistro()">Limpar</button>
@@ -195,6 +209,15 @@ input::placeholder,textarea::placeholder{color:#8090aa}select option{background:
       <h2>Equipe</h2>
       <p class="hint">Resumo individual para o gestor enxergar quem trabalha, quem converte e quem precisa de atenção.</p>
       <div id="equipeCards" class="grid3" style="margin-top:10px"></div>
+    </section>
+
+    <section id="mapa" class="card hidden gestorOnly">
+      <h2>Mapa dos Atendimentos</h2>
+      <p class="hint">Mostra os registros que foram salvos com localização. Toque em “Abrir mapa” para ver no Google Maps.</p>
+      <div class="card flat">
+        <iframe id="mapaFrame" class="mapFrame" loading="lazy"></iframe>
+      </div>
+      <div id="mapaLista" class="mapList"></div>
     </section>
 
     <section id="demoVenda" class="card hidden">
@@ -289,10 +312,22 @@ function parseMoeda(v){
 }
 function formatMoneyInput(id){
   const el=E(id); if(!el || el.__money) return; el.__money=true;
+  // Correção: não formata a cada tecla, porque no celular isso fazia 50 virar 500.000.
+  // Agora deixa digitar normal e formata somente quando sair do campo.
+  el.setAttribute("inputmode","decimal");
   el.addEventListener("input",()=>{
-    const d=String(el.value).replace(/\D/g,"");
-    if(!d){el.value="";return}
-    el.value = Number(d).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+    el.value = String(el.value||"").replace(/[^0-9,.]/g,"");
+  });
+  el.addEventListener("blur",()=>{
+    const n=parseMoeda(el.value);
+    el.value = n ? moeda(n) : "";
+  });
+  el.addEventListener("focus",()=>{
+    if(el.value.includes("R$")){
+      const n=parseMoeda(el.value);
+      el.value = n ? String(n).replace(".",",") : "";
+      setTimeout(()=>{try{el.setSelectionRange(el.value.length,el.value.length)}catch(e){}},20);
+    }
   });
 }
 function dataBR(iso){
@@ -350,11 +385,11 @@ function autoLogin(){
   }catch(e){}
 }
 function aba(id,btn){
-  ["home","registro","relatorios","ranking","equipe","demoVenda","config"].forEach(x=>E(x)?.classList.add("hidden"));
+  ["home","registro","relatorios","ranking","equipe","mapa","demoVenda","config"].forEach(x=>E(x)?.classList.add("hidden"));
   E(id)?.classList.remove("hidden");
   document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
   if(btn) btn.classList.add("active");
-  if(["home","relatorios","ranking","equipe"].includes(id)) atualizarTudo();
+  if(["home","relatorios","ranking","equipe","mapa"].includes(id)) atualizarTudo();
 }
 function iniciarDatas(){
   const d=hojeISO();
@@ -423,6 +458,38 @@ function ranking(arr){
   return Object.values(map).sort((a,b)=>b[key]-a[key] || b.valor-a.valor || b.vendas-a.vendas || a.nome.localeCompare(b.nome));
 }
 
+function getMapaUrl(lat,lng){return lat&&lng?`https://www.google.com/maps?q=${lat},${lng}`:""}
+function getOsmEmbed(lat,lng){
+  lat=Number(lat); lng=Number(lng);
+  if(!lat||!lng) return "about:blank";
+  const z=.006;
+  return `https://www.openstreetmap.org/export/embed.html?bbox=${lng-z}%2C${lat-z}%2C${lng+z}%2C${lat+z}&layer=mapnik&marker=${lat}%2C${lng}`;
+}
+function mapaLink(r){
+  const lat=Number(r.latitude||r.lat||0), lng=Number(r.longitude||r.lng||0);
+  if(!lat||!lng) return "-";
+  const url=r.mapa_url||getMapaUrl(lat,lng);
+  return `<a class="pill blue" href="${url}" target="_blank" rel="noopener">Abrir mapa</a>`;
+}
+function capturarLocalizacao(){
+  if(!navigator.geolocation){H("locStatus",'<span class="erro">Este aparelho/navegador não liberou GPS.</span>');return}
+  H("locStatus",'<span class="gold">Pegando localização...</span>');
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const lat=Number(pos.coords.latitude).toFixed(7);
+    const lng=Number(pos.coords.longitude).toFixed(7);
+    if(E("regLatitude"))E("regLatitude").value=lat;
+    if(E("regLongitude"))E("regLongitude").value=lng;
+    if(E("regMapaUrl"))E("regMapaUrl").value=getMapaUrl(lat,lng);
+    H("locStatus",`<span class="ok">Localização capturada.</span> <a class="gold" href="${getMapaUrl(lat,lng)}" target="_blank" rel="noopener">Ver no mapa</a>`);
+  },err=>{
+    H("locStatus",'<span class="erro">Não consegui pegar a localização. Confira se o GPS e a permissão do navegador estão liberados.</span>');
+  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+function limparLocalizacao(){
+  ["regLatitude","regLongitude","regMapaUrl"].forEach(id=>{if(E(id))E(id).value=""});
+  H("locStatus",'Nenhuma localização capturada.');
+}
+
 async function salvarRegistro(){
   const cliente=V("regCliente");
   if(!cliente){H("regMsg",'<span class="erro">Informe o nome do cliente.</span>');return}
@@ -438,12 +505,22 @@ async function salvarRegistro(){
     origem: V("regOrigem"),
     valor: parseMoeda(V("regValor")),
     observacao: V("regObs"),
+    latitude: V("regLatitude") ? Number(V("regLatitude")) : null,
+    longitude: V("regLongitude") ? Number(V("regLongitude")) : null,
+    mapa_url: V("regMapaUrl"),
     created_at: nowISO()
   };
   const local=getLocalRegs(); local.unshift(reg); setLocalRegs(local);
   if(db){
     try{
-      const {error}=await db.from("managerpro_registros").insert(reg);
+      const dbReg={...reg};
+      delete dbReg.id;
+      let {error}=await db.from("managerpro_registros").insert(dbReg);
+      if(error && String(error.message||"").includes("latitude")){
+        delete dbReg.latitude; delete dbReg.longitude; delete dbReg.mapa_url;
+        const retry=await db.from("managerpro_registros").insert(dbReg);
+        error=retry.error;
+      }
       if(error) throw error;
       H("regMsg",'<span class="ok">Registro salvo no Supabase.</span>');
     }catch(e){H("regMsg",'<span class="gold">Registro salvo localmente. Confira o Supabase depois.</span>')}
@@ -452,14 +529,14 @@ async function salvarRegistro(){
   limparRegistro(false);
   await atualizarTudo();
 }
-function limparRegistro(foco=true){["regCliente","regContato","regOrigem","regValor","regObs"].forEach(id=>{if(E(id))E(id).value=""}); if(foco) E("regCliente")?.focus()}
+function limparRegistro(foco=true){["regCliente","regContato","regOrigem","regValor","regObs","regLatitude","regLongitude","regMapaUrl"].forEach(id=>{if(E(id))E(id).value=""}); H("locStatus",'Nenhuma localização capturada.'); if(foco) E("regCliente")?.focus()}
 function mostrarUltimo(r){
   E("ultimoBox").classList.remove("hidden");
   H("ultimoBox", `<h2>Último registro salvo</h2><div class="regResumo">
     <div><small>Cliente</small><b>${escapeHTML(r.cliente)}</b></div>
     <div><small>Status</small><b>${escapeHTML(r.status)}</b></div>
     <div><small>Valor</small><b>${moeda(r.valor)}</b></div>
-  </div><p class="hint" style="margin-top:10px">${escapeHTML(r.observacao||"Sem observações")}</p>`);
+  </div><p class="hint" style="margin-top:10px">${escapeHTML(r.observacao||"Sem observações")}</p><p style="margin-top:10px">${mapaLink(r)}</p>`);
 }
 async function atualizarTudo(){
   await buscarRegistros();
@@ -470,7 +547,7 @@ async function atualizarTudo(){
   const cfg=getCfg(); const meta=Number(cfg.metaAtend||100); const pct=meta?Math.min(100,Math.round(r.atend/meta*100)):0;
   S("kMeta",`${r.atend}/${meta}`);S("metaInfo",pct+"%");E("metaBar").style.width=pct+"%";
   S("metaTexto", meta ? `Faltam ${Math.max(0,meta-r.atend)} atendimentos para bater a meta mensal.` : "Defina a meta na aba Gestor.");
-  renderResumo(arr,r); renderTabela(arr); renderRanking(arr); renderEquipe(arr); aplicarConfigNaTela();
+  renderResumo(arr,r); renderTabela(arr); renderRanking(arr); renderEquipe(arr); renderMapa(arr); aplicarConfigNaTela();
 }
 function preencherFiltros(){
   const nomes=[...new Set(registrosCache.map(x=>x.profissional).filter(Boolean))].sort();
@@ -488,8 +565,8 @@ function renderResumo(arr,r){
 }
 function renderTabela(arr){
   if(!arr.length){H("tabelaRegistros",'<tr><td class="empty">Sem registros nesse período.</td></tr>');return}
-  H("tabelaRegistros",`<tr><th>Data</th><th>Profissional</th><th>Cliente</th><th>Tipo</th><th>Status</th><th>Origem</th><th>Valor</th><th>Obs.</th></tr>`+
-    arr.slice(0,500).map(r=>`<tr><td>${dataBR(r.created_at)}</td><td>${escapeHTML(r.profissional)}</td><td>${escapeHTML(r.cliente)}</td><td>${escapeHTML(r.tipo)}</td><td>${statusPill(r.status)}</td><td>${escapeHTML(r.origem||"-")}</td><td>${moeda(r.valor)}</td><td>${escapeHTML(r.observacao||"-")}</td></tr>`).join(""));
+  H("tabelaRegistros",`<tr><th>Data</th><th>Profissional</th><th>Cliente</th><th>Tipo</th><th>Status</th><th>Origem</th><th>Valor</th><th>Mapa</th><th>Obs.</th></tr>`+
+    arr.slice(0,500).map(r=>`<tr><td>${dataBR(r.created_at)}</td><td>${escapeHTML(r.profissional)}</td><td>${escapeHTML(r.cliente)}</td><td>${escapeHTML(r.tipo)}</td><td>${statusPill(r.status)}</td><td>${escapeHTML(r.origem||"-")}</td><td>${moeda(r.valor)}</td><td>${mapaLink(r)}</td><td>${escapeHTML(r.observacao||"-")}</td></tr>`).join(""));
 }
 function statusPill(s){const n=normal(s);let c="";if(n.includes("venda"))c="green";else if(n.includes("perd")||n.includes("cancel"))c="red";else if(n.includes("proposta"))c="blue";return `<span class="pill ${c}">${escapeHTML(s||"-")}</span>`}
 function renderRanking(arr){
@@ -504,6 +581,19 @@ function renderEquipe(arr){
   if(!rows.length){H("equipeCards",'<div class="empty">Sem equipe ainda. Salve registros ou gere dados demo.</div>');return}
   H("equipeCards", rows.map((x,i)=>`<div class="photoCard"><span class="pill ${i===0?'green':''}">${i+1}º lugar</span><h3 style="margin:10px 0">${escapeHTML(x.nome)}</h3><p class="hint">Atendimentos: <b>${x.atendimentos}</b><br>Vendas: <b>${x.vendas}</b><br>Valor: <b>${moeda(x.valor)}</b><br>Conversão: <b>${x.conversao}%</b></p></div>`).join(""));
 }
+function renderMapa(arr){
+  if(!E("mapaLista")) return;
+  const comLocal=(arr||[]).filter(r=>Number(r.latitude||0)&&Number(r.longitude||0));
+  if(!comLocal.length){
+    H("mapaLista",'<div class="empty">Nenhum atendimento com localização ainda. Na aba Registro, toque em “Pegar localização atual” antes de salvar.</div>');
+    if(E("mapaFrame")) E("mapaFrame").src="about:blank";
+    return;
+  }
+  const primeiro=comLocal[0];
+  if(E("mapaFrame")) E("mapaFrame").src=getOsmEmbed(primeiro.latitude,primeiro.longitude);
+  H("mapaLista", comLocal.slice(0,80).map((r,i)=>`<div class="mapItem"><div><b>${escapeHTML(r.cliente||"Cliente")}</b><small>${dataBR(r.created_at)} • ${escapeHTML(r.profissional||"-")} • ${escapeHTML(r.status||"-")}</small></div><div class="toolbar"><button class="btn sec small" onclick="E('mapaFrame').src='${getOsmEmbed(r.latitude,r.longitude)}'">Ver aqui</button>${mapaLink(r)}</div></div>`).join(""));
+}
+
 async function compartilharResumo(){
   const txt=E("resumoTexto")?.innerText || "";
   try{ if(navigator.share) await navigator.share({text:txt,title:"Relatório ManagerPro"}); else {await navigator.clipboard.writeText(txt);alert("Resumo copiado.")} }catch(e){}
@@ -520,7 +610,7 @@ async function testarSupabase(){
 }
 function exportarCSV(){
   const arr=filtrarRegs();
-  const headers=["data","empresa","profissional","cliente","contato","origem","tipo","status","valor","observacao"];
+  const headers=["data","empresa","profissional","cliente","contato","origem","tipo","status","valor","latitude","longitude","mapa_url","observacao"];
   const lines=[headers.join(";")].concat(arr.map(r=>headers.map(h=>`"${String(h==="data"?dataBR(r.created_at):(r[h]??r[h==='observacao'?'observacao':'']??'')).replace(/"/g,'""')}"`).join(";")));
   const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
   const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="managerpro-relatorio.csv";a.click();URL.revokeObjectURL(a.href);
