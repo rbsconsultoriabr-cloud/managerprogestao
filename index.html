@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>ManagerPro Gestão 1.0</title>
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<style>
+:root{
+  --bg:#071426;
+  --bg2:#0b1e38;
+  --card:#0f2746;
+  --card2:#102c50;
+  --line:rgba(255,255,255,.12);
+  --txt:#f5f8ff;
+  --muted:#aebbd1;
+  --gold:#d9a441;
+  --gold2:#f4c76b;
+  --green:#18d67c;
+  --red:#ff5a6b;
+  --blue:#3f8cff;
+  --purple:#9b6cff;
+  --shadow:0 18px 40px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Inter,Arial,Helvetica,sans-serif}
+body{min-height:100vh;background:radial-gradient(circle at top left,#133b6d 0,#071426 42%,#030813 100%);color:var(--txt)}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding:14px 14px 90px}
+.hero{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 4px 10px}
+.brand{display:flex;align-items:center;gap:12px}
+.logoMark{width:54px;height:54px;border-radius:18px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071426;display:grid;place-items:center;font-size:24px;font-weight:1000;box-shadow:0 12px 30px rgba(217,164,65,.25)}
+.logoText b{display:block;font-size:26px;letter-spacing:.2px}.logoText span{color:var(--gold2)}.logoText small{color:var(--muted);font-weight:700}
+.version{border:1px solid rgba(244,199,107,.55);background:rgba(217,164,65,.10);color:var(--gold2);border-radius:999px;padding:8px 12px;font-weight:900;font-size:12px;white-space:nowrap}
+.card{background:linear-gradient(180deg,rgba(15,39,70,.97),rgba(8,22,42,.97));border:1px solid var(--line);border-radius:22px;padding:16px;margin:12px 0;box-shadow:var(--shadow)}
+.card.flat{box-shadow:none;background:rgba(255,255,255,.045)}
+h1,h2,h3{line-height:1.15}h2{font-size:19px;margin-bottom:12px;border-left:4px solid var(--gold);padding-left:10px}p{line-height:1.45}.hint{color:var(--muted);font-size:13px}.mini{color:var(--muted);font-size:12px}.ok{color:var(--green);font-weight:900}.erro{color:var(--red);font-weight:900}.gold{color:var(--gold2);font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+input,select,textarea{width:100%;border:1px solid rgba(255,255,255,.15);background:rgba(3,8,19,.55);color:var(--txt);border-radius:15px;padding:13px 12px;outline:none;min-height:48px}textarea{min-height:94px;resize:vertical}input:focus,select:focus,textarea:focus{border-color:var(--gold2);box-shadow:0 0 0 3px rgba(244,199,107,.12)}
+input::placeholder,textarea::placeholder{color:#8090aa}select option{background:#071426;color:#fff}.btn{width:100%;border:0;border-radius:15px;padding:13px 14px;font-weight:1000;color:#071426;background:linear-gradient(135deg,var(--gold2),var(--gold));min-height:48px}.btn.sec{background:rgba(255,255,255,.08);color:var(--txt);border:1px solid var(--line)}.btn.green{background:linear-gradient(135deg,#20f194,#13a961);color:#02150b}.btn.red{background:linear-gradient(135deg,#ff7a88,#ff4b60);color:#fff}.btn.blue{background:linear-gradient(135deg,#6fb0ff,#2f7df1);color:#fff}.btn.small{padding:8px 10px;min-height:34px;font-size:12px;border-radius:11px}
+.tabs{position:sticky;top:0;z-index:50;display:grid;grid-template-columns:repeat(6,1fr);gap:8px;background:rgba(7,20,38,.92);backdrop-filter:blur(12px);padding:10px 0}.tabs button{border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--txt);padding:12px 8px;border-radius:14px;font-weight:950}.tabs button.active{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#071426;border-color:transparent}.hidden{display:none!important}.gestorOnly{display:none}.gestor .gestorOnly{display:block}.gestor .tabs{grid-template-columns:repeat(7,1fr)}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kpi{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:18px;padding:14px;min-height:104px;display:flex;flex-direction:column;justify-content:center}.kpi span{color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.35px}.kpi b{font-size:30px;margin-top:5px}.kpi.gold b{color:var(--gold2)}.kpi.green b{color:var(--green)}.kpi.blue b{color:#78b6ff}.kpi.red b{color:#ff7280}.kpi.purple b{color:#b995ff}
+.progress{height:16px;background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:999px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:linear-gradient(135deg,var(--gold2),var(--green));border-radius:999px;transition:.25s}
+.tableWrap{overflow:auto;border-radius:16px;border:1px solid var(--line)}table{width:100%;border-collapse:collapse;min-width:760px;background:rgba(3,8,19,.18)}th,td{border-bottom:1px solid var(--line);padding:10px;text-align:left;font-size:13px}th{color:var(--gold2);font-size:12px;text-transform:uppercase;letter-spacing:.35px}tr:hover td{background:rgba(255,255,255,.035)}.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(217,164,65,.12);border:1px solid rgba(217,164,65,.38);color:var(--gold2);font-size:12px;font-weight:900}.pill.green{background:rgba(24,214,124,.10);border-color:rgba(24,214,124,.35);color:var(--green)}.pill.red{background:rgba(255,90,107,.10);border-color:rgba(255,90,107,.35);color:#ff8d98}.pill.blue{background:rgba(63,140,255,.10);border-color:rgba(63,140,255,.35);color:#8dc2ff}
+.loginGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:14px;align-items:stretch}.loginPanel{background:linear-gradient(135deg,rgba(217,164,65,.13),rgba(63,140,255,.08));border:1px solid rgba(217,164,65,.22);border-radius:22px;padding:18px}.loginPanel h1{font-size:28px;margin:10px 0}.featureList{display:grid;gap:9px;margin-top:16px}.featureList div{padding:11px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.045);font-weight:850;color:#dce7fb}.featureList span{color:var(--gold2)}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.toolbar .btn{width:auto}.photoCard{border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,.045);padding:12px}.regResumo{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.regResumo div{background:rgba(0,0,0,.18);border:1px solid var(--line);border-radius:14px;padding:10px}.regResumo small{display:block;color:var(--muted);font-weight:900;text-transform:uppercase;font-size:10px}.regResumo b{font-size:17px}
+.empty{padding:18px;text-align:center;color:var(--muted)}
+.shareBox{border:1px solid rgba(244,199,107,.35);background:rgba(217,164,65,.08);border-radius:18px;padding:14px;white-space:pre-wrap;color:#f7edd7}.dangerZone{border-color:rgba(255,90,107,.32);background:rgba(255,90,107,.07)}
+@media(max-width:850px){.wrap{padding:10px 10px 80px}.hero{align-items:flex-start}.version{font-size:11px}.loginGrid,.grid,.grid3,.grid4{grid-template-columns:1fr}.tabs,.gestor .tabs{grid-template-columns:repeat(3,1fr);overflow:auto}.tabs button{font-size:12px;padding:11px 6px}.kpis{grid-template-columns:repeat(2,1fr)}.kpi{min-height:92px}.kpi b{font-size:26px}.logoText b{font-size:23px}.logoMark{width:48px;height:48px;border-radius:16px}.regResumo{grid-template-columns:1fr}.toolbar .btn{width:100%}table{min-width:680px}}
+@media(max-width:420px){.kpis{grid-template-columns:1fr}.tabs,.gestor .tabs{grid-template-columns:1fr 1fr}.hero{display:block}.version{display:inline-block;margin-top:10px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="brand">
+      <div class="logoMark">MP</div>
+      <div class="logoText"><b>Manager<span>Pro</span></b><small>Gestão Inteligente</small></div>
+    </div>
+    <div class="version">Versão 1.0 • Empresarial</div>
+  </header>
+
+  <section id="loginBox" class="loginGrid">
+    <div class="loginPanel">
+      <span class="pill">Sistema para vender para empresários</span>
+      <h1>Controle equipe, metas e resultados direto pelo celular.</h1>
+      <p class="hint">Registro de atendimento, ranking, produtividade, vendas, relatórios e painel do gestor em uma tela simples.</p>
+      <div class="featureList">
+        <div><span>✓</span> Profissional registra atendimentos</div>
+        <div><span>✓</span> Gestor acompanha ranking e metas</div>
+        <div><span>✓</span> Relatórios por período e por pessoa</div>
+        <div><span>✓</span> Personalizável com nome e cores da empresa</div>
+      </div>
+    </div>
+    <div class="card" style="margin:0">
+      <h2>Entrada</h2>
+      <div class="grid">
+        <input id="loginEmail" type="email" placeholder="E-mail">
+        <input id="loginNome" placeholder="Nome completo">
+      </div>
+      <select id="loginPerfil" style="margin-top:10px">
+        <option value="profissional">Profissional</option>
+        <option value="gestor">Gestor / Dono</option>
+      </select>
+      <input id="loginEmpresa" style="margin-top:10px" placeholder="Nome da empresa. Ex: Bueno Invest">
+      <button class="btn" style="margin-top:10px" onclick="entrar()">Entrar no ManagerPro</button>
+      <p id="loginMsg" class="mini" style="margin-top:10px"></p>
+      <p class="mini" style="margin-top:12px">Dica: para demo, escolha o perfil Gestor. Depois você pode travar por e-mail aprovado no Supabase.</p>
+    </div>
+  </section>
+
+  <section id="app" class="hidden">
+    <nav class="tabs">
+      <button class="active" onclick="aba('home',this)">Início</button>
+      <button onclick="aba('registro',this)">Registro</button>
+      <button onclick="aba('relatorios',this)">Relatórios</button>
+      <button onclick="aba('ranking',this)">Ranking</button>
+      <button onclick="aba('equipe',this)">Equipe</button>
+      <button onclick="aba('demoVenda',this)">Vender</button>
+      <button class="gestorOnly" onclick="aba('config',this)">Gestor</button>
+    </nav>
+
+    <section id="home" class="card">
+      <div class="toolbar" style="justify-content:space-between;margin-bottom:12px">
+        <div>
+          <h2 id="homeTitulo">Painel do Dia</h2>
+          <p class="hint" id="homeSub">Resumo da operação.</p>
+        </div>
+        <button class="btn sec small" onclick="sair()">Sair</button>
+      </div>
+      <div class="kpis">
+        <div class="kpi blue"><span>Atendimentos</span><b id="kAtend">0</b></div>
+        <div class="kpi gold"><span>Propostas</span><b id="kProp">0</b></div>
+        <div class="kpi green"><span>Vendas</span><b id="kVend">0</b></div>
+        <div class="kpi purple"><span>VGV / Receita</span><b id="kVgv">R$ 0</b></div>
+        <div class="kpi green"><span>Conversão</span><b id="kConv">0%</b></div>
+        <div class="kpi gold"><span>Ticket médio</span><b id="kTicket">R$ 0</b></div>
+        <div class="kpi red"><span>Pendentes</span><b id="kPend">0</b></div>
+        <div class="kpi blue"><span>Meta mensal</span><b id="kMeta">0/100</b></div>
+      </div>
+      <div class="card flat">
+        <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:9px">
+          <b>Progresso da meta mensal</b><span id="metaInfo" class="gold">0%</span>
+        </div>
+        <div class="progress"><i id="metaBar"></i></div>
+        <p id="metaTexto" class="mini" style="margin-top:8px">Defina a meta na aba Gestor.</p>
+      </div>
+    </section>
+
+    <section id="registro" class="card hidden">
+      <h2>Novo Registro</h2>
+      <p class="hint">Use para qualquer negócio: atendimento, orçamento, visita, lead, venda ou retorno.</p>
+      <div class="grid3" style="margin-top:12px">
+        <input id="regProfissional" placeholder="Profissional" readonly>
+        <select id="regTipo">
+          <option value="Atendimento">Atendimento</option>
+          <option value="Lead">Lead</option>
+          <option value="Visita">Visita</option>
+          <option value="Orçamento">Orçamento</option>
+          <option value="Retorno">Retorno</option>
+          <option value="Venda">Venda</option>
+        </select>
+        <select id="regStatus">
+          <option value="Pendente">Pendente</option>
+          <option value="Em negociação">Em negociação</option>
+          <option value="Proposta enviada">Proposta enviada</option>
+          <option value="Venda realizada">Venda realizada</option>
+          <option value="Perdido">Perdido</option>
+          <option value="Cancelado">Cancelado</option>
+        </select>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <input id="regCliente" placeholder="Nome do cliente / empresa">
+        <input id="regContato" placeholder="WhatsApp / telefone">
+        <input id="regOrigem" placeholder="Origem. Ex: Instagram, rua, indicação, loja">
+        <input id="regValor" inputmode="numeric" placeholder="Valor. Ex: 1500 vira R$ 1.500,00">
+      </div>
+      <textarea id="regObs" style="margin-top:10px" placeholder="Observações do atendimento"></textarea>
+      <div class="grid" style="margin-top:10px">
+        <button class="btn" onclick="salvarRegistro()">Salvar registro</button>
+        <button class="btn sec" onclick="limparRegistro()">Limpar</button>
+      </div>
+      <p id="regMsg" style="margin-top:10px"></p>
+      <div id="ultimoBox" class="card flat hidden"></div>
+    </section>
+
+    <section id="relatorios" class="card hidden">
+      <h2>Relatórios</h2>
+      <div class="grid4">
+        <input id="fDe" type="date">
+        <input id="fAte" type="date">
+        <select id="fProf"><option value="">Todos profissionais</option></select>
+        <select id="fStatus"><option value="">Todos status</option><option>Pendente</option><option>Em negociação</option><option>Proposta enviada</option><option>Venda realizada</option><option>Perdido</option><option>Cancelado</option></select>
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <button class="btn" onclick="atualizarTudo()">Atualizar relatório</button>
+        <button class="btn sec" onclick="compartilharResumo()">Compartilhar resumo</button>
+      </div>
+      <div class="card flat"><div id="resumoTexto" class="shareBox">Sem dados ainda.</div></div>
+      <div class="tableWrap"><table id="tabelaRegistros"></table></div>
+    </section>
+
+    <section id="ranking" class="card hidden">
+      <h2>Ranking da Equipe</h2>
+      <p class="hint">Ordena por vendas, valor vendido e atendimentos. Serve para premiação e acompanhamento diário.</p>
+      <div class="toolbar" style="margin:10px 0">
+        <button class="btn small" onclick="setRanking('vendas')">Ordenar por vendas</button>
+        <button class="btn sec small" onclick="setRanking('valor')">Ordenar por valor</button>
+        <button class="btn sec small" onclick="setRanking('atendimentos')">Ordenar por atendimentos</button>
+      </div>
+      <div class="tableWrap"><table id="tabelaRanking"></table></div>
+    </section>
+
+    <section id="equipe" class="card hidden">
+      <h2>Equipe</h2>
+      <p class="hint">Resumo individual para o gestor enxergar quem trabalha, quem converte e quem precisa de atenção.</p>
+      <div id="equipeCards" class="grid3" style="margin-top:10px"></div>
+    </section>
+
+    <section id="demoVenda" class="card hidden">
+      <h2>Como vender esse sistema</h2>
+      <div class="shareBox" id="textoVenda">Tenho um sistema chamado ManagerPro Gestão.
+
+Ele ajuda o empresário a acompanhar a equipe em tempo real pelo celular: atendimentos feitos, metas, ranking, relatórios, produtividade individual e resultado geral da operação.
+
+A ideia é simples: o profissional registra o atendimento e o gestor acompanha tudo no painel, sem depender de planilha ou mensagem perdida no WhatsApp.
+
+Consigo adaptar com o nome, cores e campos da sua empresa.
+
+Posso te mostrar uma demonstração rápida?</div>
+      <div class="grid" style="margin-top:10px">
+        <button class="btn" onclick="copiarTextoVenda()">Copiar mensagem de venda</button>
+        <button class="btn green" onclick="gerarDadosDemo()">Gerar dados demo</button>
+      </div>
+      <div class="card flat">
+        <h2>Preços sugeridos</h2>
+        <div class="grid3">
+          <div class="photoCard"><span class="pill">Start</span><h3 style="margin:10px 0">R$ 497 a R$ 997</h3><p class="hint">Nome, cores, registro, ranking e relatório simples.</p></div>
+          <div class="photoCard"><span class="pill green">Pro</span><h3 style="margin:10px 0">R$ 1.497 a R$ 2.997</h3><p class="hint">Metas, painel gestor, relatórios e ajustes personalizados.</p></div>
+          <div class="photoCard"><span class="pill blue">Premium</span><h3 style="margin:10px 0">R$ 3.997 a R$ 7.997</h3><p class="hint">Sistema completo, banco de dados, implantação e suporte inicial.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="config" class="card hidden gestorOnly">
+      <h2>Configurações do Gestor</h2>
+      <div class="grid3">
+        <input id="cfgEmpresa" placeholder="Nome da empresa">
+        <input id="cfgMetaAtend" type="number" placeholder="Meta mensal de atendimentos. Ex: 100">
+        <input id="cfgMetaVenda" type="number" placeholder="Meta mensal de vendas. Ex: 20">
+      </div>
+      <div class="grid" style="margin-top:10px">
+        <input id="cfgGestorEmails" placeholder="E-mails gestores separados por vírgula">
+        <input id="cfgSegmento" placeholder="Segmento. Ex: clínica, loja, imobiliária">
+      </div>
+      <textarea id="cfgObs" style="margin-top:10px" placeholder="Observações internas do gestor"></textarea>
+      <div class="grid" style="margin-top:10px">
+        <button class="btn" onclick="salvarConfig()">Salvar configurações</button>
+        <button class="btn sec" onclick="exportarCSV()">Exportar CSV</button>
+      </div>
+      <div class="card dangerZone">
+        <h2>Supabase</h2>
+        <p class="hint">Para usar online com vários celulares, crie as tabelas no Supabase e coloque URL/KEY no início do código. Sem isso, funciona em modo local no celular.</p>
+        <div class="grid"><button class="btn blue" onclick="testarSupabase()">Testar conexão Supabase</button><button class="btn red" onclick="limparTudo()">Limpar dados locais</button></div>
+        <p id="supabaseMsg" style="margin-top:10px"></p>
+      </div>
+    </section>
+  </section>
+</div>
+
+<script>
+/* ============================
+   MANAGERPRO GESTÃO 1.0
+   Melhor para vender: usar Supabase.
+   1) Crie as tabelas com o SQL enviado junto.
+   2) Cole sua URL e anon key abaixo.
+   3) Publique esse index.html no GitHub Pages ou Vercel.
+============================ */
+const SUPABASE_URL = "";        // Ex: https://xxxx.supabase.co
+const SUPABASE_ANON_KEY = "";   // Ex: eyJ...
+let db = null;
+try{
+  if(SUPABASE_URL && SUPABASE_ANON_KEY && window.supabase){
+    db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+}catch(e){ db = null; }
+
+let usuario = {email:"", nome:"", perfil:"profissional", empresa:"ManagerPro"};
+let registrosCache = [];
+let ordemRanking = "vendas";
+const LS_REG = "managerpro_registros_v1";
+const LS_CFG = "managerpro_config_v1";
+const LS_LOGIN = "managerpro_login_v1";
+
+function E(id){return document.getElementById(id)}
+function V(id){return (E(id)?.value || "").trim()}
+function S(id,v){if(E(id)) E(id).innerText = v}
+function H(id,v){if(E(id)) E(id).innerHTML = v}
+function normal(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").trim()}
+function hojeISO(){return new Date().toISOString().slice(0,10)}
+function nowISO(){return new Date().toISOString()}
+function moeda(n){return (Number(n)||0).toLocaleString("pt-BR",{style:"currency",currency:"BRL"})}
+function parseMoeda(v){
+  let s=String(v||"").replace(/R\$|\s/g,"").trim();
+  if(!s) return 0;
+  s=s.replace(/[^0-9,.-]/g,"");
+  if(s.includes(",")) return Number(s.replace(/\./g,"").replace(",","."))||0;
+  return Number(s.replace(/\./g,""))||0;
+}
+function formatMoneyInput(id){
+  const el=E(id); if(!el || el.__money) return; el.__money=true;
+  el.addEventListener("input",()=>{
+    const d=String(el.value).replace(/\D/g,"");
+    if(!d){el.value="";return}
+    el.value = Number(d).toLocaleString("pt-BR",{minimumFractionDigits:2,maximumFractionDigits:2});
+  });
+}
+function dataBR(iso){
+  if(!iso) return "-";
+  const d = new Date(iso);
+  if(isNaN(d)) return String(iso).slice(0,10).split("-").reverse().join("/");
+  return d.toLocaleString("pt-BR",{day:"2-digit",month:"2-digit",year:"2-digit",hour:"2-digit",minute:"2-digit"});
+}
+function isVenda(r){return normal(r.status).includes("venda") || normal(r.tipo).includes("venda")}
+function isProposta(r){return normal(r.status).includes("proposta") || normal(r.tipo).includes("orcamento") || normal(r.tipo).includes("orçamento")}
+function isPendente(r){return ["pendente","em negociação","proposta enviada"].includes(normal(r.status))}
+function getCfg(){try{return JSON.parse(localStorage.getItem(LS_CFG)||"{}")}catch(e){return {}}}
+function saveCfg(c){localStorage.setItem(LS_CFG,JSON.stringify(c||{}))}
+function getLocalRegs(){try{return JSON.parse(localStorage.getItem(LS_REG)||"[]")}catch(e){return []}}
+function setLocalRegs(a){localStorage.setItem(LS_REG,JSON.stringify(a||[]))}
+function escapeHTML(s){return String(s??"").replace(/[&<>'"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[m]))}
+
+function aplicarConfigNaTela(){
+  const cfg=getCfg();
+  const empresa = cfg.empresa || usuario.empresa || "ManagerPro";
+  S("homeTitulo", `Painel do Dia • ${empresa}`);
+  S("homeSub", `${usuario.nome || "Profissional"} • ${usuario.perfil === "gestor" ? "Gestor" : "Profissional"}`);
+  if(E("cfgEmpresa")) E("cfgEmpresa").value = cfg.empresa || usuario.empresa || "";
+  if(E("cfgMetaAtend")) E("cfgMetaAtend").value = cfg.metaAtend || 100;
+  if(E("cfgMetaVenda")) E("cfgMetaVenda").value = cfg.metaVenda || 20;
+  if(E("cfgGestorEmails")) E("cfgGestorEmails").value = cfg.gestorEmails || usuario.email;
+  if(E("cfgSegmento")) E("cfgSegmento").value = cfg.segmento || "";
+  if(E("cfgObs")) E("cfgObs").value = cfg.obs || "";
+}
+
+async function entrar(){
+  const email=V("loginEmail").toLowerCase();
+  const nome=V("loginNome");
+  const perfil=V("loginPerfil") || "profissional";
+  const empresa=V("loginEmpresa") || "ManagerPro";
+  if(!email || !nome){H("loginMsg",'<span class="erro">Informe e-mail e nome.</span>');return}
+  usuario={email,nome,perfil,empresa};
+  const cfg=getCfg();
+  if(!cfg.empresa) saveCfg({...cfg,empresa,gestorEmails: perfil==="gestor" ? email : (cfg.gestorEmails||"")});
+  localStorage.setItem(LS_LOGIN,JSON.stringify(usuario));
+  document.body.classList.toggle("gestor", perfil==="gestor");
+  E("loginBox").classList.add("hidden");
+  E("app").classList.remove("hidden");
+  if(E("regProfissional")) E("regProfissional").value=nome;
+  await salvarUsuarioSupabase();
+  iniciarDatas();
+  aplicarConfigNaTela();
+  await atualizarTudo();
+}
+function sair(){localStorage.removeItem(LS_LOGIN);location.reload()}
+function autoLogin(){
+  try{
+    const l=JSON.parse(localStorage.getItem(LS_LOGIN)||"null");
+    if(l){E("loginEmail").value=l.email||"";E("loginNome").value=l.nome||"";E("loginPerfil").value=l.perfil||"profissional";E("loginEmpresa").value=l.empresa||"";setTimeout(entrar,250)}
+  }catch(e){}
+}
+function aba(id,btn){
+  ["home","registro","relatorios","ranking","equipe","demoVenda","config"].forEach(x=>E(x)?.classList.add("hidden"));
+  E(id)?.classList.remove("hidden");
+  document.querySelectorAll(".tabs button").forEach(b=>b.classList.remove("active"));
+  if(btn) btn.classList.add("active");
+  if(["home","relatorios","ranking","equipe"].includes(id)) atualizarTudo();
+}
+function iniciarDatas(){
+  const d=hojeISO();
+  const first=d.slice(0,8)+"01";
+  if(E("fDe") && !E("fDe").value) E("fDe").value=first;
+  if(E("fAte") && !E("fAte").value) E("fAte").value=d;
+}
+
+async function salvarUsuarioSupabase(){
+  if(!db) return;
+  try{
+    await db.from("managerpro_users").upsert({email:usuario.email,nome:usuario.nome,role:usuario.perfil,empresa:usuario.empresa,approved:true,updated_at:nowISO()},{onConflict:"email"});
+  }catch(e){console.warn("Supabase user falhou",e)}
+}
+async function buscarRegistros(){
+  let arr=getLocalRegs();
+  if(db){
+    try{
+      const {data,error}=await db.from("managerpro_registros").select("*").order("created_at",{ascending:false}).limit(3000);
+      if(error) throw error;
+      if(data && data.length) arr = mergeRegs(arr,data);
+    }catch(e){console.warn("Supabase registros falhou",e)}
+  }
+  registrosCache=arr.sort((a,b)=>String(b.created_at).localeCompare(String(a.created_at)));
+  return registrosCache;
+}
+function mergeRegs(a,b){
+  const map={};
+  [...(a||[]),...(b||[])].forEach(x=>{const k=x.id || `${x.user_email}|${x.created_at}|${x.cliente}`; map[k]={...(map[k]||{}),...x}});
+  return Object.values(map);
+}
+function filtrarRegs(arr=registrosCache){
+  const de=V("fDe"), ate=V("fAte"), prof=V("fProf"), status=V("fStatus");
+  return (arr||[]).filter(r=>{
+    const d=String(r.created_at||"").slice(0,10);
+    if(de && d<de) return false;
+    if(ate && d>ate) return false;
+    if(prof && String(r.profissional||"")!==prof) return false;
+    if(status && String(r.status||"")!==status) return false;
+    if(usuario.perfil!=="gestor" && String(r.user_email||"")!==usuario.email) return false;
+    return true;
+  });
+}
+function resumo(arr){
+  const atend=arr.length;
+  const prop=arr.filter(isProposta).length;
+  const vendas=arr.filter(isVenda).length;
+  const vgv=arr.filter(isVenda).reduce((s,r)=>s+Number(r.valor||0),0);
+  const pend=arr.filter(isPendente).length;
+  const conv=atend ? Math.round(vendas/atend*100) : 0;
+  const ticket=vendas ? vgv/vendas : 0;
+  return {atend,prop,vendas,vgv,pend,conv,ticket};
+}
+function ranking(arr){
+  const map={};
+  arr.forEach(r=>{
+    const n=r.profissional || r.user_email || "Sem nome";
+    if(!map[n]) map[n]={nome:n,atendimentos:0,propostas:0,vendas:0,valor:0,pendentes:0,conversao:0};
+    map[n].atendimentos++;
+    if(isProposta(r)) map[n].propostas++;
+    if(isVenda(r)){map[n].vendas++;map[n].valor+=Number(r.valor||0)}
+    if(isPendente(r)) map[n].pendentes++;
+  });
+  Object.values(map).forEach(x=>x.conversao=x.atendimentos?Math.round(x.vendas/x.atendimentos*100):0);
+  const key = ordemRanking === "valor" ? "valor" : ordemRanking === "atendimentos" ? "atendimentos" : "vendas";
+  return Object.values(map).sort((a,b)=>b[key]-a[key] || b.valor-a.valor || b.vendas-a.vendas || a.nome.localeCompare(b.nome));
+}
+
+async function salvarRegistro(){
+  const cliente=V("regCliente");
+  if(!cliente){H("regMsg",'<span class="erro">Informe o nome do cliente.</span>');return}
+  const reg={
+    id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now())+Math.random(),
+    user_email: usuario.email,
+    profissional: V("regProfissional") || usuario.nome,
+    empresa: getCfg().empresa || usuario.empresa,
+    tipo: V("regTipo"),
+    status: V("regStatus"),
+    cliente,
+    contato: V("regContato"),
+    origem: V("regOrigem"),
+    valor: parseMoeda(V("regValor")),
+    observacao: V("regObs"),
+    created_at: nowISO()
+  };
+  const local=getLocalRegs(); local.unshift(reg); setLocalRegs(local);
+  if(db){
+    try{
+      const {error}=await db.from("managerpro_registros").insert(reg);
+      if(error) throw error;
+      H("regMsg",'<span class="ok">Registro salvo no Supabase.</span>');
+    }catch(e){H("regMsg",'<span class="gold">Registro salvo localmente. Confira o Supabase depois.</span>')}
+  }else H("regMsg",'<span class="ok">Registro salvo no celular. Configure o Supabase para sincronizar com outros aparelhos.</span>');
+  mostrarUltimo(reg);
+  limparRegistro(false);
+  await atualizarTudo();
+}
+function limparRegistro(foco=true){["regCliente","regContato","regOrigem","regValor","regObs"].forEach(id=>{if(E(id))E(id).value=""}); if(foco) E("regCliente")?.focus()}
+function mostrarUltimo(r){
+  E("ultimoBox").classList.remove("hidden");
+  H("ultimoBox", `<h2>Último registro salvo</h2><div class="regResumo">
+    <div><small>Cliente</small><b>${escapeHTML(r.cliente)}</b></div>
+    <div><small>Status</small><b>${escapeHTML(r.status)}</b></div>
+    <div><small>Valor</small><b>${moeda(r.valor)}</b></div>
+  </div><p class="hint" style="margin-top:10px">${escapeHTML(r.observacao||"Sem observações")}</p>`);
+}
+async function atualizarTudo(){
+  await buscarRegistros();
+  preencherFiltros();
+  const arr=filtrarRegs();
+  const r=resumo(arr);
+  S("kAtend",r.atend);S("kProp",r.prop);S("kVend",r.vendas);S("kVgv",moeda(r.vgv));S("kConv",r.conv+"%");S("kTicket",moeda(r.ticket));S("kPend",r.pend);
+  const cfg=getCfg(); const meta=Number(cfg.metaAtend||100); const pct=meta?Math.min(100,Math.round(r.atend/meta*100)):0;
+  S("kMeta",`${r.atend}/${meta}`);S("metaInfo",pct+"%");E("metaBar").style.width=pct+"%";
+  S("metaTexto", meta ? `Faltam ${Math.max(0,meta-r.atend)} atendimentos para bater a meta mensal.` : "Defina a meta na aba Gestor.");
+  renderResumo(arr,r); renderTabela(arr); renderRanking(arr); renderEquipe(arr); aplicarConfigNaTela();
+}
+function preencherFiltros(){
+  const nomes=[...new Set(registrosCache.map(x=>x.profissional).filter(Boolean))].sort();
+  if(E("fProf")){
+    const val=E("fProf").value;
+    H("fProf",'<option value="">Todos profissionais</option>'+nomes.map(n=>`<option>${escapeHTML(n)}</option>`).join(""));
+    E("fProf").value=val;
+  }
+}
+function renderResumo(arr,r){
+  const cfg=getCfg();
+  const periodo=`${V("fDe")?V("fDe").split("-").reverse().join("/"):"início"} até ${V("fAte")?V("fAte").split("-").reverse().join("/"):"hoje"}`;
+  const txt=`RELATÓRIO MANAGERPRO\nEmpresa: ${cfg.empresa || usuario.empresa}\nPeríodo: ${periodo}\n\nAtendimentos: ${r.atend}\nPropostas: ${r.prop}\nVendas: ${r.vendas}\nVGV/Receita: ${moeda(r.vgv)}\nConversão: ${r.conv}%\nTicket médio: ${moeda(r.ticket)}\nPendentes: ${r.pend}\n\nResumo: ${r.vendas>0?"operação com vendas registradas no período.":"operação ainda sem venda registrada no período."}`;
+  S("resumoTexto",txt);
+}
+function renderTabela(arr){
+  if(!arr.length){H("tabelaRegistros",'<tr><td class="empty">Sem registros nesse período.</td></tr>');return}
+  H("tabelaRegistros",`<tr><th>Data</th><th>Profissional</th><th>Cliente</th><th>Tipo</th><th>Status</th><th>Origem</th><th>Valor</th><th>Obs.</th></tr>`+
+    arr.slice(0,500).map(r=>`<tr><td>${dataBR(r.created_at)}</td><td>${escapeHTML(r.profissional)}</td><td>${escapeHTML(r.cliente)}</td><td>${escapeHTML(r.tipo)}</td><td>${statusPill(r.status)}</td><td>${escapeHTML(r.origem||"-")}</td><td>${moeda(r.valor)}</td><td>${escapeHTML(r.observacao||"-")}</td></tr>`).join(""));
+}
+function statusPill(s){const n=normal(s);let c="";if(n.includes("venda"))c="green";else if(n.includes("perd")||n.includes("cancel"))c="red";else if(n.includes("proposta"))c="blue";return `<span class="pill ${c}">${escapeHTML(s||"-")}</span>`}
+function renderRanking(arr){
+  const rows=ranking(arr);
+  if(!rows.length){H("tabelaRanking",'<tr><td class="empty">Sem dados para ranking.</td></tr>');return}
+  H("tabelaRanking",`<tr><th>#</th><th>Profissional</th><th>Atend.</th><th>Propostas</th><th>Vendas</th><th>Valor</th><th>Conversão</th><th>Pendentes</th></tr>`+
+    rows.map((x,i)=>`<tr><td><b class="gold">${i+1}º</b></td><td>${escapeHTML(x.nome)}</td><td>${x.atendimentos}</td><td>${x.propostas}</td><td>${x.vendas}</td><td>${moeda(x.valor)}</td><td>${x.conversao}%</td><td>${x.pendentes}</td></tr>`).join(""));
+}
+function setRanking(tipo){ordemRanking=tipo;atualizarTudo()}
+function renderEquipe(arr){
+  const rows=ranking(arr);
+  if(!rows.length){H("equipeCards",'<div class="empty">Sem equipe ainda. Salve registros ou gere dados demo.</div>');return}
+  H("equipeCards", rows.map((x,i)=>`<div class="photoCard"><span class="pill ${i===0?'green':''}">${i+1}º lugar</span><h3 style="margin:10px 0">${escapeHTML(x.nome)}</h3><p class="hint">Atendimentos: <b>${x.atendimentos}</b><br>Vendas: <b>${x.vendas}</b><br>Valor: <b>${moeda(x.valor)}</b><br>Conversão: <b>${x.conversao}%</b></p></div>`).join(""));
+}
+async function compartilharResumo(){
+  const txt=E("resumoTexto")?.innerText || "";
+  try{ if(navigator.share) await navigator.share({text:txt,title:"Relatório ManagerPro"}); else {await navigator.clipboard.writeText(txt);alert("Resumo copiado.")} }catch(e){}
+}
+async function copiarTextoVenda(){try{await navigator.clipboard.writeText(E("textoVenda").innerText);alert("Mensagem copiada.")}catch(e){}}
+function salvarConfig(){
+  const cfg={empresa:V("cfgEmpresa")||usuario.empresa,metaAtend:Number(V("cfgMetaAtend"))||100,metaVenda:Number(V("cfgMetaVenda"))||20,gestorEmails:V("cfgGestorEmails"),segmento:V("cfgSegmento"),obs:V("cfgObs")};
+  saveCfg(cfg); usuario.empresa=cfg.empresa; localStorage.setItem(LS_LOGIN,JSON.stringify(usuario)); aplicarConfigNaTela(); atualizarTudo(); alert("Configurações salvas.");
+}
+async function testarSupabase(){
+  if(!db){H("supabaseMsg",'<span class="erro">Supabase ainda não configurado. Coloque URL e ANON KEY no início do código.</span>');return}
+  try{const {error}=await db.from("managerpro_registros").select("id",{count:"exact",head:true}); if(error) throw error; H("supabaseMsg",'<span class="ok">Conexão com Supabase funcionando.</span>')}
+  catch(e){H("supabaseMsg",'<span class="erro">Conectou, mas a tabela pode não existir ou a política está bloqueando.</span>')}
+}
+function exportarCSV(){
+  const arr=filtrarRegs();
+  const headers=["data","empresa","profissional","cliente","contato","origem","tipo","status","valor","observacao"];
+  const lines=[headers.join(";")].concat(arr.map(r=>headers.map(h=>`"${String(h==="data"?dataBR(r.created_at):(r[h]??r[h==='observacao'?'observacao':'']??'')).replace(/"/g,'""')}"`).join(";")));
+  const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="managerpro-relatorio.csv";a.click();URL.revokeObjectURL(a.href);
+}
+function limparTudo(){if(confirm("Tem certeza que deseja limpar todos os dados locais deste aparelho?")){localStorage.removeItem(LS_REG);atualizarTudo()}}
+function gerarDadosDemo(){
+  const nomes=["Ana Paula","Carlos Mendes","Juliana Rocha","Pedro Lima","Marcos Alves"];
+  const clientes=["Cliente Alpha","Cliente Prime","Loja Central","Clínica Bella","Imobiliária Serra","João Silva","Maria Santos","Empresa Norte"];
+  const status=["Pendente","Em negociação","Proposta enviada","Venda realizada","Perdido"];
+  const tipos=["Atendimento","Lead","Visita","Orçamento","Venda"];
+  const origem=["Instagram","Indicação","Loja","WhatsApp","Rua","Google"];
+  const arr=getLocalRegs();
+  for(let i=0;i<35;i++){
+    const st=status[Math.floor(Math.random()*status.length)];
+    const venda=st==="Venda realizada";
+    arr.unshift({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()+i),user_email:usuario.email,profissional:nomes[Math.floor(Math.random()*nomes.length)],empresa:getCfg().empresa||usuario.empresa,tipo:venda?"Venda":tipos[Math.floor(Math.random()*tipos.length)],status:st,cliente:clientes[Math.floor(Math.random()*clientes.length)],contato:"(12) 9"+String(Math.floor(10000000+Math.random()*89999999)),origem:origem[Math.floor(Math.random()*origem.length)],valor:venda?Math.floor(900+Math.random()*12000):0,observacao:"Registro demo para apresentação do ManagerPro.",created_at:new Date(Date.now()-Math.random()*1000*60*60*24*22).toISOString()});
+  }
+  setLocalRegs(arr); atualizarTudo(); alert("Dados demo gerados.");
+}
+
+formatMoneyInput("regValor");
+iniciarDatas();
+autoLogin();
+</script>
+</body>
+</html>
